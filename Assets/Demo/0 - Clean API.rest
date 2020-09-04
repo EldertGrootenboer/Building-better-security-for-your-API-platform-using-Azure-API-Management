@@ -1,0 +1,36 @@
+@host = app-api-platform-security.azurewebsites.net
+#@host = localhost:5001
+
+### Retrieve all repairs
+GET https://{{host}}/api/Repairs
+
+### Retrieve specific repair
+GET https://{{host}}/api/Repairs/1
+
+### Create repair
+POST https://{{host}}/api/Repairs
+Content-Type: application/json
+
+{
+    "asset": {
+        "assetType": "Traffic Light",
+        "location": "Corner of Kings Avenue and Rose street"
+    },
+    "requester": {
+        "name": "Eldert Grootenboer",
+        "phoneNumber": "0612345678",
+        "email": "eldert@eldert.net"
+    }
+}
+
+### Update repair
+PUT https://{{host}}/api/Repairs/1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "Status": "Finished"
+}
+
+### Delete repair
+DELETE https://{{host}}/api/Repairs/4

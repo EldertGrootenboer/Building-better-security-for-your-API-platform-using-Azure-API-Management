@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/fdf3a3a3-c8f5-472f-8367-6a9a4a6c11a9/resourceGroups/rg-api-platform-security/providers/Microsoft.Web/sites/app-api-platform-security",
+    "appService.deploySubpath": "publish"
+}
