@@ -2,13 +2,13 @@
 #@host = localhost:5001
 
 ### Retrieve all repairs
-GET https://{{host}}/api/Repairs
+GET http://{{host}}/api/Repairs
 
 ### Retrieve specific repair
-GET https://{{host}}/api/Repairs/1
+GET http://{{host}}/api/Repairs/1
 
 ### Create repair
-POST https://{{host}}/api/Repairs
+POST http://{{host}}/api/Repairs
 Content-Type: application/json
 
 {
@@ -24,13 +24,13 @@ Content-Type: application/json
 }
 
 ### Update repair
-PUT https://{{host}}/api/Repairs/1
+PUT http://{{host}}/api/Repairs/500
 Content-Type: application/json
 
 {
-    "id": 1,
+    "id": 500,
     "Status": "Finished"
 }
 
 ### Delete repair
-DELETE https://{{host}}/api/Repairs/4
+DELETE http://{{host}}/api/Repairs/4
