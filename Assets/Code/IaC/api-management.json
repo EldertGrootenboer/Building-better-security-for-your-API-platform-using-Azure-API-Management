@@ -1,0 +1,174 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apiManagement": {
+            "defaultValue": {
+                "name": "apim-api-platform-security",
+                "publisherEmail": "eldert@eldert.net",
+                "publisherName": "EPH",
+                "sku": "Developer",
+                "subscriptions": {
+                    "demo": "Demo",
+                    "loaderIO": "loader.io"
+                }
+            },
+            "type": "object"
+        },
+        "appService": {
+            "defaultValue": {
+                "name": "app-api-platform-security"
+            },
+            "type": "object"
+        },
+        "applicationInsights": {
+            "defaultValue": {
+                "name": "appi-api-platform-security"
+            },
+            "type": "object"
+        },
+        "general": {
+            "defaultValue": {
+                "location": "[resourceGroup().location]",
+                "tags": {
+                    "LastModifiedDate": "[utcNow()]",
+                    "Project": "Building better security for your API platform using Azure API Management",
+                    "Purpose": "Session"
+                }
+            },
+            "type": "object"
+        },
+        "keyVault": {
+            "defaultValue": {
+                "name": "kv-api-platform-security"
+            },
+            "type": "object"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service",
+            "apiVersion": "2019-01-01",
+            "name": "[parameters('apiManagement').name]",
+            "location": "[parameters('general').location]",
+            "tags": "[parameters('general').tags]",
+            "sku": {
+                "name": "[parameters('apiManagement').sku]",
+                "capacity": 1
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "publisherEmail": "[parameters('apiManagement').publisherEmail]",
+                "publisherName": "[parameters('apiManagement').publisherName]"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/loggers",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('applicationInsights').name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name)]"
+            ],
+            "properties": {
+                "loggerType": "applicationInsights",
+                "credentials": {
+                    "instrumentationKey": "[reference(resourceId('Microsoft.Insights/components', parameters('applicationInsights').name), '2014-04-01').InstrumentationKey]"
+                },
+                "isBuffered": true,
+                "resourceId": "[resourceId('Microsoft.Insights/components', parameters('applicationInsights').name)]"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/diagnostics",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('apiManagement').name, '/applicationinsights')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name)]",
+                "[resourceId('Microsoft.ApiManagement/service/loggers', parameters('apiManagement').name, parameters('applicationInsights').name)]"
+            ],
+            "properties": {
+                "alwaysLog": "allErrors",
+                "httpCorrelationProtocol": "Legacy",
+                "logClientIp": true,
+                "loggerId": "[resourceId('Microsoft.ApiManagement/service/loggers', parameters('apiManagement').name, parameters('applicationInsights').name)]",
+                "sampling": {
+                    "samplingType": "fixed",
+                    "percentage": 100
+                }
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/subscriptions",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').subscriptions.demo)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name)]"
+            ],
+            "properties": {
+                "scope": "[concat(resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name), '/apis')]",
+                "displayName": "[parameters('apiManagement').subscriptions.demo]",
+                "state": "active",
+                "allowTracing": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/subscriptions",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').subscriptions.loaderIO)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name)]"
+            ],
+            "properties": {
+                "scope": "[concat(resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name), '/apis')]",
+                "displayName": "[parameters('apiManagement').subscriptions.loaderIO]",
+                "state": "active",
+                "allowTracing": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/backends",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('apiManagement').name, '/backend-api-platform-security')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name)]"
+            ],
+            "properties": {
+                "resourceId": "[resourceId('Microsoft.Web/sites', parameters('appService').name)]",
+                "url": "[concat('https://', parameters('appService').name, '.azurewebsites.net')]",
+                "protocol": "http"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/policies",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('apiManagement').name, '/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name)]"
+            ],
+            "properties": {
+                "value": "[concat('<policies><inbound><cors allow-credentials=\"true\"><allowed-origins><origin>https://', parameters('apiManagement').name, '.developer.azure-api.net</origin></allowed-origins><allowed-methods preflight-result-max-age=\"300\"><method>*</method></allowed-methods><allowed-headers><header>*</header></allowed-headers><expose-headers><header>*</header></expose-headers></cors></inbound><backend><forward-request /></backend><outbound /><on-error /></policies>')]",
+                "format": "rawxml"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/accessPolicies",
+            "name": "[concat(parameters('keyVault').name, '/add')]",
+            "apiVersion": "2016-10-01",
+            "properties": {
+                "accessPolicies": [
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "[reference(resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name), '2019-01-01', 'full').identity.principalId]",
+                        "permissions": {
+                            "secrets": [
+                                "get"
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
