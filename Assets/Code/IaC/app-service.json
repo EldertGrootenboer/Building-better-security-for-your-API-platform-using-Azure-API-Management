@@ -4,8 +4,8 @@
     "parameters": {
         "appService": {
             "defaultValue": {
-                "appServicePlan": "",
-                "name": "plan-api-platform-security"
+                "appServicePlan": "plan-api-platform-security",
+                "name": "app-api-platform-security"
             },
             "type": "object"
         },
