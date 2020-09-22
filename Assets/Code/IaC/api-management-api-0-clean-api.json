@@ -1,0 +1,310 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apiManagement": {
+            "defaultValue": {
+                "apis": {
+                    "cleanAPI": {
+                        "displayName": "0 - Clean API",
+                        "name": "CleanApi",
+                        "operations": {
+                            "createRepair": {
+                                "displayName": "Create Repair",
+                                "name": "CreateRepair",
+                                "urlTemplate": "/repairs"
+                            },
+                            "deleteRepair": {
+                                "displayName": "Delete Repair",
+                                "name": "DeleteRepair",
+                                "urlTemplate": "/repairs/{id}"
+                            },
+                            "getRepairByID": {
+                                "displayName": "Create Repair",
+                                "name": "GetRepairByID",
+                                "urlTemplate": "/repairs/{id}"
+                            },
+                            "getRepairs": {
+                                "displayName": "Get Repairs",
+                                "name": "GetRepairs",
+                                "urlTemplate": "/repairs"
+                            },
+                            "updateRepair": {
+                                "displayName": "Update Repair",
+                                "name": "UpdateRepair",
+                                "urlTemplate": "/repairs/{id}"
+                            }
+                        },
+                        "path": "assets"
+                    }
+                },
+                "name": "apim-api-platform-security"
+            },
+            "type": "object"
+        },
+        "appService": {
+            "defaultValue": {
+                "name": "app-api-platform-security"
+            },
+            "type": "object"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.cleanAPI.name)]",
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.cleanAPI.displayName]",
+                "subscriptionRequired": true,
+                "path": "[parameters('apiManagement').apis.cleanAPI.path]",
+                "protocols": [
+                    "http",
+                    "https"
+                ],
+                "isCurrent": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.cleanAPI.name, '/', parameters('apiManagement').apis.cleanAPI.operations.createRepair.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.cleanAPI.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.cleanAPI.operations.createRepair.displayName]",
+                "method": "POST",
+                "urlTemplate": "[parameters('apiManagement').apis.cleanAPI.operations.createRepair.urlTemplate]",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "sample": "{\r\n    \"asset\": {\r\n        \"assetType\": \"Traffic Light\",\r\n        \"location\": \"Corner of Kings Avenue and Rose street\"\r\n    },\r\n    \"requester\": {\r\n        \"name\": \"Eldert Grootenboer\",\r\n        \"phoneNumber\": \"0612345678\",\r\n        \"email\": \"eldert@eldert.net\"\r\n    }\r\n}"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 201,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"id\": 5,\r\n  \"status\": \"Created\",\r\n  \"asset\": {\r\n    \"id\": 5,\r\n    \"assetType\": \"Traffic Light\",\r\n    \"location\": \"Corner of Kings Avenue and Rose street\"\r\n  },\r\n  \"requester\": {\r\n    \"id\": 5,\r\n    \"name\": \"Eldert Grootenboer\",\r\n    \"phoneNumber\": \"0612345678\",\r\n    \"email\": \"eldert@eldert.net\"\r\n  }\r\n}"
+                            }
+                        ]
+                    },
+                    {
+                        "statusCode": 400,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\r\n  \"title\": \"One or more validation errors occurred.\",\r\n  \"status\": 400,\r\n  \"traceId\": \"|20875117-4bf1c2f90d8e2658.\",\r\n  \"errors\": {\r\n    \"$\": [\r\n      \"'\\\"' is invalid after a property name. Expected a ':'. Path: $ | LineNumber: 2 | BytePositionInLine: 4.\"\r\n    ]\r\n  }\r\n}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.cleanAPI.name, '/', parameters('apiManagement').apis.cleanAPI.operations.deleteRepair.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.cleanAPI.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.cleanAPI.operations.deleteRepair.displayName]",
+                "method": "DELETE",
+                "urlTemplate": "[parameters('apiManagement').apis.cleanAPI.operations.deleteRepair.urlTemplate]",
+                "templateParameters": [
+                    {
+                        "name": "id",
+                        "type": "long",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": []
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"id\": 4,\r\n  \"status\": \"Created\",\r\n  \"asset\": null,\r\n  \"requester\": null\r\n}"
+                            }
+                        ]
+                    },
+                    {
+                        "statusCode": 404,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\r\n  \"title\": \"Not Found\",\r\n  \"status\": 404,\r\n  \"traceId\": \"|489250b6-4eb8a7128f1d28f2.\"\r\n}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.cleanAPI.name, '/', parameters('apiManagement').apis.cleanAPI.operations.getRepairByID.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.cleanAPI.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.cleanAPI.operations.getRepairByID.displayName]",
+                "method": "GET",
+                "urlTemplate": "[parameters('apiManagement').apis.cleanAPI.operations.getRepairByID.urlTemplate]",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": []
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "[[\r\n  {\r\n    \"id\": 1,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 1,\r\n      \"assetType\": \"Street Light\",\r\n      \"location\": \"West corner of Microsoft Way, Redmond\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 1,\r\n      \"name\": \"John Smith\",\r\n      \"phoneNumber\": \"0675214572\",\r\n      \"email\": \"john.smith@microsoft.com\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 2,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 2,\r\n      \"assetType\": \"Generator\",\r\n      \"location\": \"Intersection of Four Lanes & Cycle Track, Berlin\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 2,\r\n      \"name\": \"Claire Smith\",\r\n      \"phoneNumber\": \"0622486247\",\r\n      \"email\": \"claire1@outlook.com\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 3,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 3,\r\n      \"assetType\": \"Switch Box\",\r\n      \"location\": \"Out front of central station, The Hague\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 3,\r\n      \"name\": \"Luis Vasque\",\r\n      \"phoneNumber\": \"0614756328\",\r\n      \"email\": \"luisvasque@tbb.nl\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 4,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 4,\r\n      \"assetType\": \"Traffic Light\",\r\n      \"location\": \"Corner of Kings Avenue and Rose street\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 4,\r\n      \"name\": \"Eldert Grootenboer\",\r\n      \"phoneNumber\": \"0612345678\",\r\n      \"email\": \"eldert@eldert.net\"\r\n    }\r\n  }\r\n]"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.cleanAPI.name, '/', parameters('apiManagement').apis.cleanAPI.operations.getRepairs.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.cleanAPI.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.cleanAPI.operations.getRepairs.displayName]",
+                "method": "GET",
+                "urlTemplate": "[parameters('apiManagement').apis.cleanAPI.operations.getRepairs.urlTemplate]",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "sample": "{\r\n    \"asset\": {\r\n        \"assetType\": \"Traffic Light\",\r\n        \"location\": \"Corner of Kings Avenue and Rose street\"\r\n    },\r\n    \"requester\": {\r\n        \"name\": \"Eldert Grootenboer\",\r\n        \"phoneNumber\": \"0612345678\",\r\n        \"email\": \"eldert@eldert.net\"\r\n    }\r\n}"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 201,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"id\": 5,\r\n  \"status\": \"Created\",\r\n  \"asset\": {\r\n    \"id\": 5,\r\n    \"assetType\": \"Traffic Light\",\r\n    \"location\": \"Corner of Kings Avenue and Rose street\"\r\n  },\r\n  \"requester\": {\r\n    \"id\": 5,\r\n    \"name\": \"Eldert Grootenboer\",\r\n    \"phoneNumber\": \"0612345678\",\r\n    \"email\": \"eldert@eldert.net\"\r\n  }\r\n}"
+                            }
+                        ]
+                    },
+                    {
+                        "statusCode": 400,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\r\n  \"title\": \"One or more validation errors occurred.\",\r\n  \"status\": 400,\r\n  \"traceId\": \"|20875117-4bf1c2f90d8e2658.\",\r\n  \"errors\": {\r\n    \"$\": [\r\n      \"'\\\"' is invalid after a property name. Expected a ':'. Path: $ | LineNumber: 2 | BytePositionInLine: 4.\"\r\n    ]\r\n  }\r\n}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.cleanAPI.name, '/', parameters('apiManagement').apis.cleanAPI.operations.updateRepair.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.cleanAPI.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.cleanAPI.operations.updateRepair.displayName]",
+                "method": "PUT",
+                "urlTemplate": "[parameters('apiManagement').apis.cleanAPI.operations.updateRepair.urlTemplate]",
+                "templateParameters": [
+                    {
+                        "name": "id",
+                        "type": "long",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "sample": "{\r\n    \"id\": 1,\r\n    \"Status\": \"Finished\"\r\n}"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 204,
+                        "headers": [],
+                        "representations": []
+                    },
+                    {
+                        "statusCode": 400,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\r\n  \"title\": \"Bad Request\",\r\n  \"status\": 400,\r\n  \"traceId\": \"|760343e8-463b6b4db9dd3ab0.\"\r\n}"
+                            }
+                        ]
+                    },
+                    {
+                        "statusCode": 404,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\r\n  \"title\": \"Not Found\",\r\n  \"status\": 404,\r\n  \"traceId\": \"|760343e9-463b6b4db9dd3ab0.\"\r\n}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/policies",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.cleanAPI.name, '/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.cleanAPI.name)]"
+            ],
+            "properties": {
+                "value": "[concat('<policies><inbound><base /><set-backend-service id=\"apim-generated-policy\" backend-id=\"', parameters('appService').name, '\" /><rewrite-uri template=\"@{return (\"/api\" + context.Operation.UrlTemplate);}\" copy-unmatched-params=\"true\" /></inbound><backend><base /></backend><outbound><base /></outbound><on-error><base /></on-error></policies>')]",
+                "format": "rawxml"
+            }
+        }
+    ]
+}
