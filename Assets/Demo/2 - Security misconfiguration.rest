@@ -1,7 +1,7 @@
 @host = apim-api-platform-security.azure-api.net
 
 ### Missing authentication
-GET http://{{host}}/assets/repairs
+GET http://{{host}}/demo/repairs
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### OAuth2 authentication
@@ -15,27 +15,27 @@ grant_type=client_credentials
 &scope={{scope}}
 
 ### Get repairs using OAuth2 over HTTP
-GET http://{{host}}/assets3/repairs
+GET http://{{host}}/demo3/repairs
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### Get repairs using OAuth2 over HTTPS
-GET https://{{host}}/assets3/repairs
+GET https://{{host}}/demo3/repairs
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### Get specific repair
-GET https://{{host}}/assets3/repairs/1
+GET https://{{host}}/demo3/repairs/1
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### Delete repair
-DELETE https://{{host}}/assets3/repairs/1
+DELETE https://{{host}}/demo3/repairs/1
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### Update repair
-PUT https://{{host}}/assets3/repairs/502
+PUT https://{{host}}/demo3/repairs/502
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 Content-Type: application/json
@@ -46,7 +46,7 @@ Content-Type: application/json
 }
 
 ### Update repair
-PUT https://{{host}}/assets4/repairs/502
+PUT https://{{host}}/demo4/repairs/502
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 Content-Type: application/json

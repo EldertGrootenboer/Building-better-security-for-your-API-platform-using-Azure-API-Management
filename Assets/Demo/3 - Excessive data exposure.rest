@@ -1,7 +1,7 @@
 @host = apim-api-platform-security.azure-api.net
 
 ### Standard response
-GET https://{{host}}/assets/repairs
+GET https://{{host}}/demo/repairs
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### OAuth2 authentication
@@ -15,6 +15,6 @@ grant_type=client_credentials
 &scope={{scope}}
 
 ### Get repairs using OAuth2
-GET https://{{host}}/assets5/repairs
+GET https://{{host}}/demo5/repairs
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}

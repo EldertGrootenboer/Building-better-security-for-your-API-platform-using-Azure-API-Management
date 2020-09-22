@@ -35,7 +35,7 @@
                                 "urlTemplate": "/repairs/{id}"
                             }
                         },
-                        "path": "assets"
+                        "path": "demo"
                     }
                 },
                 "name": "apim-api-platform-security"

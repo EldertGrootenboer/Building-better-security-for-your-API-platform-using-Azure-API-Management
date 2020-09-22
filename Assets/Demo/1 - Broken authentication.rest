@@ -1,11 +1,11 @@
 @host = apim-api-platform-security.azure-api.net
 
 ### Missing authentication
-GET http://{{host}}/assets/repairs
+GET http://{{host}}/demo/repairs
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### Basic authentication
-GET http://{{host}}/assets1/Repairs
+GET http://{{host}}/demo1/Repairs
 Authorization: Basic ApiPlatformSecurity {{basicAuthenticationPassword}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
@@ -20,6 +20,6 @@ grant_type=client_credentials
 &scope={{scope}}
 
 ### Get repairs using OAuth2
-GET http://{{host}}/assets2/repairs
+GET http://{{host}}/demo2/repairs
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}

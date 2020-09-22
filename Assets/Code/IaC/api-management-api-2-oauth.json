@@ -35,7 +35,7 @@
                                 "urlTemplate": "/repairs/{id}"
                             }
                         },
-                        "path": "assets2"
+                        "path": "demo2"
                     }
                 },
                 "name": "apim-api-platform-security"
@@ -47,12 +47,6 @@
                 "name": "app-api-platform-security"
             },
             "type": "object"
-        },
-        "appRegistrationClientId": {
-            "type": "securestring",
-            "metadata": {
-                "description": "The application (client) ID of the app registration for the API, as described at http://bit.ly/api-management-oauth-aad."
-            }
         }
     },
     "resources": [
