@@ -4,9 +4,15 @@
     "parameters": {
         "gitHub": {
             "defaultValue": {
-                "baseUri": "https://raw.githubusercontent.com/EldertGrootenboer/Azure-Resource-Manager-in-A-Serverless-World/master/assets/demo-3-deployment/"
+                "baseUri": "https://raw.githubusercontent.com/EldertGrootenboer/Building-better-security-for-your-API-platform-using-Azure-API-Management/master/Assets/Code/IaC/"
             },
             "type": "object"
+        },
+        "administratorObjectId": {
+            "type": "securestring"
+        },
+        "basicAuthenticationPassword": {
+            "type": "securestring"
         }
     },
     "resources": [
@@ -31,6 +37,14 @@
                 "templateLink": {
                     "uri": "[concat(parameters('gitHub').baseUri, 'key-vault.json')]",
                     "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "administratorObjectId": {
+                        "value": "[parameters('administratorObjectId')]"
+                    },
+                    "basicAuthenticationPassword": {
+                        "value": "[parameters('basicAuthenticationPassword')]"
+                    }
                 }
             }
         },
