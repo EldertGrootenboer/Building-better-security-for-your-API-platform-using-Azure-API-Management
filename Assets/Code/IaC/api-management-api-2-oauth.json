@@ -38,13 +38,13 @@
                         "path": "demo2"
                     }
                 },
-                "name": "apim-api-platform-security-2"
+                "name": "apim-api-platform-security-3-2"
             },
             "type": "object"
         },
         "appService": {
             "defaultValue": {
-                "name": "app-api-platform-security"
+                "name": "app-api-platform-security-2"
             },
             "type": "object"
         }

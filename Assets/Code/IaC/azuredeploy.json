@@ -13,6 +13,26 @@
         },
         "basicAuthenticationPassword": {
             "type": "string"
+        },
+        "general": {
+            "defaultValue": {
+                "location": "[resourceGroup().location]",
+                "tags": {
+                    "LastModifiedDate": "[utcNow()]",
+                    "Project": "Building better security for your API platform using Azure API Management",
+                    "Purpose": "Session"
+                }
+            },
+            "type": "object"
+        },
+        "keyVault": {
+            "defaultValue": {
+                "name": "kv-api-platform",
+                "secrets": {
+                    "basicAuthenticationPassword": "BasicAuthenticationPassword"
+                }
+            },
+            "type": "object"
         }
     },
     "resources": [
@@ -44,6 +64,12 @@
                     },
                     "basicAuthenticationPassword": {
                         "value": "[parameters('basicAuthenticationPassword')]"
+                    },
+                    "general": {
+                        "value": "[parameters('general')]"
+                    },
+                    "keyVault": {
+                        "value": "[parameters('keyVault')]"
                     }
                 }
             }

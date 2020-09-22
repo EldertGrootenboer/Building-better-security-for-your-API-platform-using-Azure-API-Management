@@ -1,4 +1,4 @@
-@host = apim-api-platform-security-2.azure-api.net
+@host = apim-api-platform-security-3.azure-api.net
 
 ### Standard response
 GET https://{{host}}/demo/repairs

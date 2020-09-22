@@ -7,9 +7,9 @@
 $subscriptionName = "Visual Studio Enterprise"
 $apiAppRegistrationName = "api-app-registration-api-platform-security"
 $clientAppRegistrationName = "client-app-registration-api-platform-security"
-$apiManagementInstanceName = "apim-api-platform-security-2"
-$resourceGroupName = "rg-arm-in-a-serverless-world-2"
-$basePath = "C:\Users\elder\OneDrive\Sessions\Azure-Resource-Manager-in-A-Serverless-World"
+$apiManagementInstanceName = "apim-api-platform-security-3"
+$resourceGroupName = "rg-rg-api-platform-security"
+$basePath = "C:\Users\elder\OneDrive\Sessions\Building-better-security-for-your-API-platform-using-Azure-API-Management"
 
 Get-AzSubscription -SubscriptionName $subscriptionName | Set-AzContext
 
@@ -23,5 +23,12 @@ if (-not $clientAppRegistrationExists) {
     New-AzADApplication -DisplayName $clientAppRegistrationName -IdentifierUris "api://$clientAppRegistrationName"
 }
 
-New-AzResourceGroup -Name $resourceGroupName -Location 'West Europe' -Tag @{CreationDate=[DateTime]::UtcNow.ToString(); Project="Azure Resource Manager In A Serverless World"; Purpose="Session"}
-New-AzResourceGroupDeployment -Name Demo2 -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\Assets\Code\IaC\azuredeploy.json"
+New-AzResourceGroup -Name $resourceGroupName -Location 'West Europe' -Tag @{CreationDate=[DateTime]::UtcNow.ToString(); Project="Building better security for your API platform using Azure API Management"; Purpose="Session"}
+
+#$administratorObjectId = ConvertTo-SecureString (Get-AzADUser -Mail "me@eldert.net" | Select-Object -ExpandProperty Id | Out-String) -AsPlainText -Force
+$administratorObjectId = ConvertTo-SecureString "2fe35e55-b3ac-4c86-a18f-97ef0dc4615d" -AsPlainText -Force
+$basicAuthenticationPassword = ConvertTo-SecureString "QXBpUGxhdGZvcm1TZWN1cml0eTpQYXNzQHdvcmQx" -AsPlainText -Force
+$administratorObjectId = "2fe35e55-b3ac-4c86-a18f-97ef0dc4615d"
+$basicAuthenticationPassword = "QXBpUGxhdGZvcm1TZWN1cml0eTpQYXNzQHdvcmQx"
+
+New-AzResourceGroupDeployment -Name Demo -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\Assets\Code\IaC\azuredeploy.json" -administratorObjectId $administratorObjectId -basicAuthenticationPassword $basicAuthenticationPassword
