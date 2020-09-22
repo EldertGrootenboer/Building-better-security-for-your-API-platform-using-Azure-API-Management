@@ -1,0 +1,88 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apiManagement": {
+            "defaultValue": {
+                "apis": {
+                    "loaderIoVerification": {
+                        "displayName": "Loader.io Verification",
+                        "name": "LoaderIoVerification",
+                        "operations": {
+                            "validate": {
+                                "displayName": "Validate",
+                                "name": "Validate",
+                                "urlTemplate": "/"
+                            }
+                        },
+                        "path": "loaderio-5ecba462e4a9cbce919783d4ba6ab851"
+                    }
+                },
+                "name": "apim-api-platform-security"
+            },
+            "type": "object"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.loaderIoVerification.name)]",
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.loaderIoVerification.displayName]",
+                "subscriptionRequired": true,
+                "path": "[parameters('apiManagement').apis.loaderIoVerification.path]",
+                "protocols": [
+                    "https",
+                    "http"
+                ],
+                "isCurrent": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.loaderIoVerification.name, '/', parameters('apiManagement').apis.loaderIoVerification.operations.validate.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.loaderIoVerification.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.loaderIoVerification.operations.validate.displayName]",
+                "method": "GET",
+                "urlTemplate": "[parameters('apiManagement').apis.loaderIoVerification.operations.validate.urlTemplate]",
+                "templateParameters": [],
+                "description": "",
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": []
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "description": "",
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "text/plain",
+                                "sample": "loaderio-5ecba462e4a9cbce919783d4ba6ab851"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/policies",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.loaderIoVerification.name, '/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.loaderIoVerification.name)]"
+            ],
+            "properties": {
+                "value": "[concat('<policies><inbound><base /><mock-response status-code=\"200\" /></inbound><backend><base /></backend><outbound><base /></outbound><on-error><base /></on-error></policies>')]",
+                "format": "rawxml"
+            }
+        }
+    ]
+}
