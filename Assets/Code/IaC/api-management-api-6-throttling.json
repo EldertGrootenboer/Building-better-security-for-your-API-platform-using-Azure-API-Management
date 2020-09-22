@@ -1,0 +1,256 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apiManagement": {
+            "defaultValue": {
+                "apis": {
+                    "throttling": {
+                        "displayName": "6 - Throttling",
+                        "name": "Throttling",
+                        "operations": {
+                            "createRepair": {
+                                "displayName": "Create Repair",
+                                "name": "CreateRepair",
+                                "urlTemplate": "/repairs"
+                            },
+                            "getRepairByID": {
+                                "displayName": "Create Repair",
+                                "name": "GetRepairByID",
+                                "urlTemplate": "/repairs/{id}"
+                            },
+                            "getRepairs": {
+                                "displayName": "Get Repairs",
+                                "name": "GetRepairs",
+                                "urlTemplate": "/repairs"
+                            },
+                            "updateRepair": {
+                                "displayName": "Update Repair",
+                                "name": "UpdateRepair",
+                                "urlTemplate": "/repairs/{id}"
+                            }
+                        },
+                        "path": "demo6"
+                    }
+                },
+                "name": "apim-api-platform-security"
+            },
+            "type": "object"
+        },
+        "appService": {
+            "defaultValue": {
+                "name": "app-api-platform-security"
+            },
+            "type": "object"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/apis",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.throttling.name)]",
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.throttling.displayName]",
+                "subscriptionRequired": true,
+                "path": "[parameters('apiManagement').apis.throttling.path]",
+                "protocols": [
+                    "https"
+                ],
+                "isCurrent": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.throttling.name, '/', parameters('apiManagement').apis.throttling.operations.createRepair.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.throttling.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.throttling.operations.createRepair.displayName]",
+                "method": "POST",
+                "urlTemplate": "[parameters('apiManagement').apis.throttling.operations.createRepair.urlTemplate]",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "sample": "{\r\n    \"asset\": {\r\n        \"assetType\": \"Traffic Light\",\r\n        \"location\": \"Corner of Kings Avenue and Rose street\"\r\n    },\r\n    \"requester\": {\r\n        \"name\": \"Eldert Grootenboer\",\r\n        \"phoneNumber\": \"0612345678\",\r\n        \"email\": \"eldert@eldert.net\"\r\n    }\r\n}"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 201,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"id\": 5,\r\n  \"status\": \"Created\",\r\n  \"asset\": {\r\n    \"id\": 5,\r\n    \"assetType\": \"Traffic Light\",\r\n    \"location\": \"Corner of Kings Avenue and Rose street\"\r\n  },\r\n  \"requester\": {\r\n    \"id\": 5,\r\n    \"name\": \"Eldert Grootenboer\",\r\n    \"phoneNumber\": \"0612345678\",\r\n    \"email\": \"eldert@eldert.net\"\r\n  }\r\n}"
+                            }
+                        ]
+                    },
+                    {
+                        "statusCode": 400,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\r\n  \"title\": \"One or more validation errors occurred.\",\r\n  \"status\": 400,\r\n  \"traceId\": \"|20875117-4bf1c2f90d8e2658.\",\r\n  \"errors\": {\r\n    \"$\": [\r\n      \"'\\\"' is invalid after a property name. Expected a ':'. Path: $ | LineNumber: 2 | BytePositionInLine: 4.\"\r\n    ]\r\n  }\r\n}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.throttling.name, '/', parameters('apiManagement').apis.throttling.operations.getRepairByID.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.throttling.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.throttling.operations.getRepairByID.displayName]",
+                "method": "GET",
+                "urlTemplate": "[parameters('apiManagement').apis.throttling.operations.getRepairByID.urlTemplate]",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": []
+                },
+                "responses": [
+                    {
+                        "statusCode": 200,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "[[\r\n  {\r\n    \"id\": 1,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 1,\r\n      \"assetType\": \"Street Light\",\r\n      \"location\": \"West corner of Microsoft Way, Redmond\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 1,\r\n      \"name\": \"John Smith\",\r\n      \"phoneNumber\": \"0675214572\",\r\n      \"email\": \"john.smith@microsoft.com\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 2,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 2,\r\n      \"assetType\": \"Generator\",\r\n      \"location\": \"Intersection of Four Lanes & Cycle Track, Berlin\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 2,\r\n      \"name\": \"Claire Smith\",\r\n      \"phoneNumber\": \"0622486247\",\r\n      \"email\": \"claire1@outlook.com\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 3,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 3,\r\n      \"assetType\": \"Switch Box\",\r\n      \"location\": \"Out front of central station, The Hague\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 3,\r\n      \"name\": \"Luis Vasque\",\r\n      \"phoneNumber\": \"0614756328\",\r\n      \"email\": \"luisvasque@tbb.nl\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 4,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 4,\r\n      \"assetType\": \"Traffic Light\",\r\n      \"location\": \"Corner of Kings Avenue and Rose street\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 4,\r\n      \"name\": \"Eldert Grootenboer\",\r\n      \"phoneNumber\": \"0612345678\",\r\n      \"email\": \"eldert@eldert.net\"\r\n    }\r\n  }\r\n]"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.throttling.name, '/', parameters('apiManagement').apis.throttling.operations.getRepairs.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.throttling.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.throttling.operations.getRepairs.displayName]",
+                "method": "GET",
+                "urlTemplate": "[parameters('apiManagement').apis.throttling.operations.getRepairs.urlTemplate]",
+                "templateParameters": [],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "sample": "{\r\n    \"asset\": {\r\n        \"assetType\": \"Traffic Light\",\r\n        \"location\": \"Corner of Kings Avenue and Rose street\"\r\n    },\r\n    \"requester\": {\r\n        \"name\": \"Eldert Grootenboer\",\r\n        \"phoneNumber\": \"0612345678\",\r\n        \"email\": \"eldert@eldert.net\"\r\n    }\r\n}"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 201,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"id\": 5,\r\n  \"status\": \"Created\",\r\n  \"asset\": {\r\n    \"id\": 5,\r\n    \"assetType\": \"Traffic Light\",\r\n    \"location\": \"Corner of Kings Avenue and Rose street\"\r\n  },\r\n  \"requester\": {\r\n    \"id\": 5,\r\n    \"name\": \"Eldert Grootenboer\",\r\n    \"phoneNumber\": \"0612345678\",\r\n    \"email\": \"eldert@eldert.net\"\r\n  }\r\n}"
+                            }
+                        ]
+                    },
+                    {
+                        "statusCode": 400,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\r\n  \"title\": \"One or more validation errors occurred.\",\r\n  \"status\": 400,\r\n  \"traceId\": \"|20875117-4bf1c2f90d8e2658.\",\r\n  \"errors\": {\r\n    \"$\": [\r\n      \"'\\\"' is invalid after a property name. Expected a ':'. Path: $ | LineNumber: 2 | BytePositionInLine: 4.\"\r\n    ]\r\n  }\r\n}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/operations",
+            "apiVersion": "2019-12-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.throttling.name, '/', parameters('apiManagement').apis.throttling.operations.updateRepair.name)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.throttling.name)]"
+            ],
+            "properties": {
+                "displayName": "[parameters('apiManagement').apis.throttling.operations.updateRepair.displayName]",
+                "method": "PUT",
+                "urlTemplate": "[parameters('apiManagement').apis.throttling.operations.updateRepair.urlTemplate]",
+                "templateParameters": [
+                    {
+                        "name": "id",
+                        "type": "long",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "request": {
+                    "queryParameters": [],
+                    "headers": [],
+                    "representations": [
+                        {
+                            "contentType": "application/json",
+                            "sample": "{\r\n    \"id\": 1,\r\n    \"Status\": \"Finished\"\r\n}"
+                        }
+                    ]
+                },
+                "responses": [
+                    {
+                        "statusCode": 204,
+                        "headers": [],
+                        "representations": []
+                    },
+                    {
+                        "statusCode": 400,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\r\n  \"title\": \"Bad Request\",\r\n  \"status\": 400,\r\n  \"traceId\": \"|760343e8-463b6b4db9dd3ab0.\"\r\n}"
+                            }
+                        ]
+                    },
+                    {
+                        "statusCode": 404,
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\r\n  \"title\": \"Not Found\",\r\n  \"status\": 404,\r\n  \"traceId\": \"|760343e9-463b6b4db9dd3ab0.\"\r\n}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/apis/policies",
+            "apiVersion": "2019-01-01",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').apis.throttling.name, '/policy')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.throttling.name)]"
+            ],
+            "properties": {
+                "value": "[concat('<policies><inbound><!-- Check if the correct OAuth2 claims are sent --><validate-jwt header-name=\"Authorization\" failed-validation-httpcode=\"401\" failed-validation-error-message=\"Unauthorized. Access token is missing or invalid.\"><openid-config url=\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\" /><required-claims><claim name=\"aud\"><value>api://', parameters('apiManagement').name, '</value></claim><claim name=\"iss\"><value>https://sts.windows.net/', subscription().tenantId, '/v2.0</value></claim></required-claims></validate-jwt><base /><!-- Throttle request when size over 1MB --><set-variable name=\"method\" value=\"@(context.Request.Method)\" /><choose><when condition=\"@(context.Variables.GetValueOrDefault<string>(\"method\") != \"GET\")\"><set-variable name=\"bodySize\" value=\"@(context.Request.Headers[\"Content-Length\"][0])\" /><choose><when condition=\"@(int.Parse(context.Variables.GetValueOrDefault<string>(\"bodySize\")) < 1000000)\"><!-- let it pass through by doing nothing --></when><otherwise><return-response><set-status code=\"413\" reason=\"Payload to large\" /></return-response></otherwise></choose></when></choose><!-- Throttle number of requests per subscription --><rate-limit calls=\"15\" renewal-period=\"60\" /><base /><!-- Set the backend url for the API --><set-backend-service id=\"apim-generated-policy\" backend-id=\"', parameters('appService').name, '\" /><rewrite-uri template=\"@{return (\"/api\" + context.Operation.UrlTemplate);}\" copy-unmatched-params=\"true\" /></inbound><backend><base /></backend><outbound><!-- Remove sensitive data from the response --><set-body>@{            var response = JToken.Parse(context.Response.Body.As<string>());            if(response is JArray)            {                foreach(JObject repair in response)                {                    repair.Property(\"requester\").Remove();                }            }            else            {                ((JObject)response).Property(\"requester\").Remove();            }            return response.ToString();        }</set-body><base /></outbound><on-error><base /></on-error></policies>')]",
+                "format": "rawxml"
+            }
+        }
+    ]
+}
