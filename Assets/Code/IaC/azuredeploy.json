@@ -9,10 +9,10 @@
             "type": "object"
         },
         "administratorObjectId": {
-            "type": "securestring"
+            "type": "string"
         },
         "basicAuthenticationPassword": {
-            "type": "securestring"
+            "type": "string"
         }
     },
     "resources": [
