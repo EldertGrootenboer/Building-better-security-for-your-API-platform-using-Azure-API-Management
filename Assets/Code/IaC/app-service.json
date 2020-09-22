@@ -5,13 +5,13 @@
         "appService": {
             "defaultValue": {
                 "appServicePlan": "plan-api-platform-security",
-                "name": "app-api-platform-security"
+                "name": "app-api-platform-security-2"
             },
             "type": "object"
         },
         "applicationInsights": {
             "defaultValue": {
-                "name": "ai-smart-data-and-integration-hub-m10"
+                "name": "appi-api-platform-security"
             },
             "type": "object"
         },
