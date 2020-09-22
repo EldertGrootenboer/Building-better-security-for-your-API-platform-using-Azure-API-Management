@@ -4,13 +4,13 @@
     "parameters": {
         "apiManagement": {
             "defaultValue": {
-                "name": "apim-api-platform-security-2",
+                "name": "apim-api-platform-security",
                 "publisherEmail": "eldert@eldert.net",
                 "publisherName": "EPH",
                 "sku": "Developer",
                 "subscriptions": {
                     "demo": "Demo",
-                    "loaderIO": "loader.io"
+                    "loaderIO": "loader"
                 }
             },
             "type": "object"
@@ -40,7 +40,7 @@
         },
         "keyVault": {
             "defaultValue": {
-                "name": "kv-api-platform-security-2"
+                "name": "kv-api-platform"
             },
             "type": "object"
         }
