@@ -26,11 +26,14 @@
             "defaultValue": {
                 "name": "kv-api-platform",
                 "secrets": {
-                    "apiAppRegistrationApplicationId2": "ApiAppRegistrationApplicationId",
                     "basicAuthenticationPassword": "BasicAuthenticationPassword"
                 }
             },
             "type": "object"
+        },
+        "apiAppRegistrationApplicationIdKey": {
+            "defaultValue": "apiAppRegistrationApplicationId",
+            "type": "string"
         }
     },
     "resources": [
@@ -55,6 +58,61 @@
             }
         },
         {
+            "type": "Microsoft.KeyVault/vaults/accessPolicies",
+            "apiVersion": "2016-10-01",
+            "name": "[concat(parameters('keyVault').name, '/add')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVault').name)]"
+            ],
+            "properties": {
+                "accessPolicies": [
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "[parameters('administratorObjectId')]",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
             "type": "Microsoft.KeyVault/vaults/secrets",
             "apiVersion": "2016-10-01",
             "name": "[concat(parameters('keyVault').name, '/', parameters('keyVault').secrets.basicAuthenticationPassword)]",
@@ -71,7 +129,7 @@
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
             "apiVersion": "2016-10-01",
-            "name": "[concat(parameters('keyVault').name, '/', parameters('keyVault').secrets.apiAppRegistrationApplicationId2)]",
+            "name": "[concat(parameters('keyVault').name, '/', parameters('apiAppRegistrationApplicationIdKey'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVault').name)]"
             ],
