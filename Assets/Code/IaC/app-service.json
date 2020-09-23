@@ -72,6 +72,10 @@
                             "value": "[reference(resourceId('Microsoft.Insights/components', parameters('applicationInsights').name), '2014-04-01').InstrumentationKey]"
                         },
                         {
+                            "name": "WEBSITE_RUN_FROM_PACKAGE",
+                            "value": "1"
+                        },
+                        {
                             "name": "APPINSIGHTS_PROFILERFEATURE_VERSION",
                             "value": "disabled"
                         },
