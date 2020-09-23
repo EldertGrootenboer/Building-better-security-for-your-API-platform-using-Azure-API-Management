@@ -43,7 +43,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'application-insights.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'application-insights.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -55,7 +55,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'key-vault.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'key-vault.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -84,7 +84,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'app-service.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'app-service.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -100,7 +100,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -115,7 +115,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management-api-0-clean-api.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management-api-0-clean-api.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -130,7 +130,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management-api-1-basic-authentication.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management-api-1-basic-authentication.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -145,7 +145,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management-api-2-oauth.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management-api-2-oauth.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -160,7 +160,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management-api-3-https.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management-api-3-https.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -175,7 +175,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management-api-4-catch-errors.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management-api-4-catch-errors.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -190,7 +190,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management-api-5-remove-sensitive-data.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management-api-5-remove-sensitive-data.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -205,7 +205,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management-api-6-throttling.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management-api-6-throttling.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -220,7 +220,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management-api-7-logging.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management-api-7-logging.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }
@@ -235,7 +235,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('gitHub').baseUri, 'api-management-api-loader-io-validation.json')]",
+                    "uri": "[uri(parameters('gitHub').baseUri, 'api-management-api-loader-io-validation.json')]",
                     "contentVersion": "1.0.0.0"
                 }
             }

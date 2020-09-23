@@ -135,7 +135,8 @@
                 "[resourceId('Microsoft.ApiManagement/service', parameters('apiManagement').name)]"
             ],
             "properties": {
-                "resourceId": "[resourceId('Microsoft.Web/sites', parameters('appService').name)]",
+                // Does not want a resource ID, but an actual URL
+                "resourceId": "[uri('https://management.azure.com/', concat('subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/sites/', parameters('appService').name))]",
                 "url": "[concat('https://', parameters('appService').name, '.azurewebsites.net')]",
                 "protocol": "http"
             }
