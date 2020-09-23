@@ -25,4 +25,4 @@ This assumes you're working with Visual Studio Code. Create a folder in the root
 
 ## Deployment
 
-Deploying the Azure resources can be done by running the script [1-create-app-registrations-for-oauth-demo.ps1](./Assets/Code/IaC/1-create-app-registrations-for-oauth-demo.ps1).
+Deploying the Azure resources can be done by running the script [1-1-deployment.ps1](./Assets/Code/IaC/1-1-deployment.ps1).
