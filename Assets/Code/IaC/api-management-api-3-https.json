@@ -169,7 +169,15 @@
                 "displayName": "[parameters('apiManagement').apis.https.operations.getRepairByID.displayName]",
                 "method": "GET",
                 "urlTemplate": "[parameters('apiManagement').apis.https.operations.getRepairByID.urlTemplate]",
-                "templateParameters": [],
+                "templateParameters": [
+                    {
+                        "name": "id",
+                        "type": "long",
+                        "required": true,
+                        "values": []
+                    }
+                ],
+                "description": "",
                 "request": {
                     "queryParameters": [],
                     "headers": [],
@@ -177,12 +185,24 @@
                 },
                 "responses": [
                     {
-                        "statusCode": 200,
+                        "statusCode": 404,
+                        "description": "",
                         "headers": [],
                         "representations": [
                             {
                                 "contentType": "application/json",
-                                "sample": "[[\r\n  {\r\n    \"id\": 1,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 1,\r\n      \"assetType\": \"Street Light\",\r\n      \"location\": \"West corner of Microsoft Way, Redmond\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 1,\r\n      \"name\": \"John Smith\",\r\n      \"phoneNumber\": \"0675214572\",\r\n      \"email\": \"john.smith@microsoft.com\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 2,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 2,\r\n      \"assetType\": \"Generator\",\r\n      \"location\": \"Intersection of Four Lanes & Cycle Track, Berlin\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 2,\r\n      \"name\": \"Claire Smith\",\r\n      \"phoneNumber\": \"0622486247\",\r\n      \"email\": \"claire1@outlook.com\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 3,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 3,\r\n      \"assetType\": \"Switch Box\",\r\n      \"location\": \"Out front of central station, The Hague\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 3,\r\n      \"name\": \"Luis Vasque\",\r\n      \"phoneNumber\": \"0614756328\",\r\n      \"email\": \"luisvasque@tbb.nl\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 4,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 4,\r\n      \"assetType\": \"Traffic Light\",\r\n      \"location\": \"Corner of Kings Avenue and Rose street\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 4,\r\n      \"name\": \"Eldert Grootenboer\",\r\n      \"phoneNumber\": \"0612345678\",\r\n      \"email\": \"eldert@eldert.net\"\r\n    }\r\n  }\r\n]"
+                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.4\",\r\n  \"title\": \"Not Found\",\r\n  \"status\": 404,\r\n  \"traceId\": \"|489250b7-4eb8a7128f1d28f2.\"\r\n}"
+                            }
+                        ]
+                    },
+                    {
+                        "statusCode": 200,
+                        "description": "",
+                        "headers": [],
+                        "representations": [
+                            {
+                                "contentType": "application/json",
+                                "sample": "{\r\n  \"id\": 1,\r\n  \"status\": \"Created\",\r\n  \"asset\": {\r\n    \"id\": 1,\r\n    \"assetType\": \"Street Light\",\r\n    \"location\": \"West corner of Microsoft Way, Redmond\"\r\n  },\r\n  \"requester\": {\r\n    \"id\": 1,\r\n    \"name\": \"John Smith\",\r\n    \"phoneNumber\": \"0675214572\",\r\n    \"email\": \"john.smith@microsoft.com\"\r\n  }\r\n}"
                             }
                         ]
                     }
@@ -204,31 +224,16 @@
                 "request": {
                     "queryParameters": [],
                     "headers": [],
-                    "representations": [
-                        {
-                            "contentType": "application/json",
-                            "sample": "{\r\n    \"asset\": {\r\n        \"assetType\": \"Traffic Light\",\r\n        \"location\": \"Corner of Kings Avenue and Rose street\"\r\n    },\r\n    \"requester\": {\r\n        \"name\": \"Eldert Grootenboer\",\r\n        \"phoneNumber\": \"0612345678\",\r\n        \"email\": \"eldert@eldert.net\"\r\n    }\r\n}"
-                        }
-                    ]
+                    "representations": []
                 },
                 "responses": [
                     {
-                        "statusCode": 201,
+                        "statusCode": 200,
                         "headers": [],
                         "representations": [
                             {
                                 "contentType": "application/json",
-                                "sample": "{\r\n  \"id\": 5,\r\n  \"status\": \"Created\",\r\n  \"asset\": {\r\n    \"id\": 5,\r\n    \"assetType\": \"Traffic Light\",\r\n    \"location\": \"Corner of Kings Avenue and Rose street\"\r\n  },\r\n  \"requester\": {\r\n    \"id\": 5,\r\n    \"name\": \"Eldert Grootenboer\",\r\n    \"phoneNumber\": \"0612345678\",\r\n    \"email\": \"eldert@eldert.net\"\r\n  }\r\n}"
-                            }
-                        ]
-                    },
-                    {
-                        "statusCode": 400,
-                        "headers": [],
-                        "representations": [
-                            {
-                                "contentType": "application/json",
-                                "sample": "{\r\n  \"type\": \"https://tools.ietf.org/html/rfc7231#section-6.5.1\",\r\n  \"title\": \"One or more validation errors occurred.\",\r\n  \"status\": 400,\r\n  \"traceId\": \"|20875117-4bf1c2f90d8e2658.\",\r\n  \"errors\": {\r\n    \"$\": [\r\n      \"'\\\"' is invalid after a property name. Expected a ':'. Path: $ | LineNumber: 2 | BytePositionInLine: 4.\"\r\n    ]\r\n  }\r\n}"
+                                "sample": "[[\r\n  {\r\n    \"id\": 1,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 1,\r\n      \"assetType\": \"Street Light\",\r\n      \"location\": \"West corner of Microsoft Way, Redmond\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 1,\r\n      \"name\": \"John Smith\",\r\n      \"phoneNumber\": \"0675214572\",\r\n      \"email\": \"john.smith@microsoft.com\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 2,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 2,\r\n      \"assetType\": \"Generator\",\r\n      \"location\": \"Intersection of Four Lanes & Cycle Track, Berlin\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 2,\r\n      \"name\": \"Claire Smith\",\r\n      \"phoneNumber\": \"0622486247\",\r\n      \"email\": \"claire1@outlook.com\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 3,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 3,\r\n      \"assetType\": \"Switch Box\",\r\n      \"location\": \"Out front of central station, The Hague\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 3,\r\n      \"name\": \"Luis Vasque\",\r\n      \"phoneNumber\": \"0614756328\",\r\n      \"email\": \"luisvasque@tbb.nl\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 4,\r\n    \"status\": \"Created\",\r\n    \"asset\": {\r\n      \"id\": 4,\r\n      \"assetType\": \"Traffic Light\",\r\n      \"location\": \"Corner of Kings Avenue and Rose street\"\r\n    },\r\n    \"requester\": {\r\n      \"id\": 4,\r\n      \"name\": \"Eldert Grootenboer\",\r\n      \"phoneNumber\": \"0612345678\",\r\n      \"email\": \"eldert@eldert.net\"\r\n    }\r\n  }\r\n]"
                             }
                         ]
                     }
