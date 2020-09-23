@@ -21,7 +21,7 @@
         },
         "keyVault": {
             "defaultValue": {
-                "name": "kv-api-platform-2",
+                "name": "kv-api-platform",
                 "secrets": {
                     "basicAuthenticationPassword": "BasicAuthenticationPassword"
                 }
