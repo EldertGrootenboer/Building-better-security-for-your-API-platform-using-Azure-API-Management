@@ -24,11 +24,11 @@ Content-Type: application/json
 }
 
 ### Update repair
-PUT {{host}}/api/Repairs/500
+PUT {{host}}/api/Repairs/4
 Content-Type: application/json
 
 {
-    "id": 500,
+    "id": 4,
     "Status": "Finished"
 }
 
