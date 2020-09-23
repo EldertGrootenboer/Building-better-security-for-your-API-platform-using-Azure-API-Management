@@ -1,12 +1,12 @@
 @host = apim-api-platform-security-3.azure-api.net
 
 ### Missing authentication
-GET http://{{host}}/demo/repairs
+GET http://{{host}}/demo1/repairs
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### Basic authentication
 GET http://{{host}}/demo1/Repairs
-Authorization: Basic ApiPlatformSecurity {{basicAuthenticationPassword}}
+Authorization: Basic {{basicAuthenticationPassword}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### OAuth2 authentication
