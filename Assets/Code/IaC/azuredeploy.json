@@ -13,7 +13,7 @@
         },
         "gitHub": {
             "defaultValue": {
-                "baseUri": "https://raw.githubusercontent.com/EldertGrootenboer/Building-better-security-for-your-API-platform-using-Azure-API-Management/master/Assets/Code/IaC/"
+                "baseUri": "https://raw.githubusercontent.com/EldertGrootenboer/Building-better-security-for-your-API-platform-using-Azure-API-Management/master/assets/code/iac/"
             },
             "type": "object"
         }

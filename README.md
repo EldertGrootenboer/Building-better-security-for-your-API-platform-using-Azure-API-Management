@@ -25,4 +25,4 @@ This assumes you're working with Visual Studio Code. Create a folder in the root
 
 ## Deployment
 
-Deploying the Azure resources can be done by running the script [1-deployment.ps1](./Assets/Code/IaC/1-deployment.ps1).
+Deploying the Azure resources can be done by running the script [1-deployment.ps1](./assets/code/iac/1-deployment.ps1).

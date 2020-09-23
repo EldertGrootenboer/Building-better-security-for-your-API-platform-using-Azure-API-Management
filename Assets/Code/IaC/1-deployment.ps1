@@ -25,17 +25,17 @@ $apiAppRegistration = Get-AzADApplication -DisplayName $apiAppRegistrationName
 
 # Create the resource group and deploy the resources
 New-AzResourceGroup -Name $resourceGroupName -Location 'West Europe' -Tag @{CreationDate=[DateTime]::UtcNow.ToString(); Project="Building better security for your API platform using Azure API Management"; Purpose="Session"}
-New-AzResourceGroupDeployment -Name "APISecurity" -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\Assets\Code\IaC\azuredeploy.json" -administratorObjectId $administratorObjectId -basicAuthenticationPassword $basicAuthenticationPassword -apiAppRegistrationApplicationId $apiAppRegistration.ApplicationId
+New-AzResourceGroupDeployment -Name "APISecurity" -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\assets\code\iac\azuredeploy.json" -administratorObjectId $administratorObjectId -basicAuthenticationPassword $basicAuthenticationPassword -apiAppRegistrationApplicationId $apiAppRegistration.ApplicationId
 
 # Deploy contents of the App Service
-dotnet publish -c Release -o "$basePath\Assets\Code\Web API\AssetManagementApi\publish"
-Compress-Archive -Path "$basePath\Assets\Code\Web API\AssetManagementApi\publish\*" -DestinationPath "$basePath\Assets\Code\Web API\AssetManagementApi\Deployment.zip"
-Publish-AzWebapp -ResourceGroupName $resourceGroupName -Name $appServiceName -ArchivePath "$basePath\Assets\Code\Web API\AssetManagementApi\Deployment.zip"
-Remove-Item "$basePath\Assets\Code\Web API\AssetManagementApi\Deployment.zip"
+dotnet publish -c Release -o "$basePath\assets\code\web-api\asset-management-api\publish"
+Compress-Archive -Path "$basePath\assets\code\web-api\asset-management-api\publish\*" -DestinationPath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
+Publish-AzWebapp -ResourceGroupName $resourceGroupName -Name $appServiceName -ArchivePath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
+Remove-Item "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
 
 # Optional for debugging, loops through each local file individually
-#Get-ChildItem "$basePath\Assets\Code\IaC" -Filter *.json | 
+#Get-ChildItem "$basePath\assets\code\iac" -Filter *.json | 
 #Foreach-Object {
 #    Write-Output "Deploying: " $_.FullName
-#   New-AzResourceGroupDeployment -Name Demo -ResourceGroupName $resourceGroupName -TemplateFile $_.FullName -ErrorAction Continue
+#   New-AzResourceGroupDeployment -Name "APISecurity" -ResourceGroupName $resourceGroupName -TemplateFile $_.FullName -ErrorAction Continue
 #}
