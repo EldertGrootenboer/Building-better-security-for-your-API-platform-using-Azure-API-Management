@@ -15,14 +15,12 @@ $basePath = "C:\Users\elder\OneDrive\Sessions\Building-better-security-for-your-
 $settingsPath = "$basePath\.vscode\settings.json"
 $administratorEmail = "me@eldert.net"
 
-# Retrieves the dynamic parameters
-$administratorObjectId = (Get-AzADUser -Mail $administratorEmail).Id
-$basicAuthenticationPassword = (Get-Content -Path $settingsPath | ConvertFrom-Json).'rest-client.environmentVariables'.'$shared'.basicAuthenticationPassword
-
 # Login to Azure
 Get-AzSubscription -SubscriptionName $subscriptionName | Set-AzContext
 
-# Retrieve application registration for the API
+# Retrieves the dynamic parameters
+$administratorObjectId = (Get-AzADUser -Mail $administratorEmail).Id
+$basicAuthenticationPassword = (Get-Content -Path $settingsPath | ConvertFrom-Json).'rest-client.environmentVariables'.'$shared'.basicAuthenticationPassword
 $apiAppRegistration = Get-AzADApplication -DisplayName $apiAppRegistrationName
 
 # Create the resource group and deploy the resources
@@ -39,5 +37,5 @@ Remove-Item "$basePath\Assets\Code\Web API\AssetManagementApi\Deployment.zip"
 #Get-ChildItem "$basePath\Assets\Code\IaC" -Filter *.json | 
 #Foreach-Object {
 #    Write-Output "Deploying: " $_.FullName
-#    New-AzResourceGroupDeployment -Name Demo -ResourceGroupName $resourceGroupName -TemplateFile $_.FullName -ErrorAction Ignore
+#   New-AzResourceGroupDeployment -Name Demo -ResourceGroupName $resourceGroupName -TemplateFile $_.FullName -ErrorAction Continue
 #}
