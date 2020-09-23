@@ -5,6 +5,9 @@
         "administratorObjectId": {
             "type": "string"
         },
+        "apiAppRegistrationApplicationId": {
+            "type": "string"
+        },
         "basicAuthenticationPassword": {
             "type": "string"
         },
@@ -23,6 +26,7 @@
             "defaultValue": {
                 "name": "kv-api-platform",
                 "secrets": {
+                    "apiAppRegistrationApplicationId": "apiAppRegistrationApplicationId",
                     "basicAuthenticationPassword": "BasicAuthenticationPassword"
                 }
             },
@@ -102,6 +106,20 @@
             ],
             "properties": {
                 "value": "[parameters('basicAuthenticationPassword')]",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2016-10-01",
+            "name": "[concat(parameters('keyVault').name, '/', parameters('keyVault').secrets.apiAppRegistrationApplicationId)]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVault').name)]"
+            ],
+            "properties": {
+                "value": "[parameters('apiAppRegistrationApplicationId')]",
                 "attributes": {
                     "enabled": true
                 }
