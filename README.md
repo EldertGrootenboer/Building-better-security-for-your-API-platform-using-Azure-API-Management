@@ -8,7 +8,7 @@ This is where Azure API Management comes in, where we can create a repository of
 
 This assumes you're working with Visual Studio Code. Create a folder in the root of this repository called .vscode, and add a file called settings.json. In this file, place the following content, and adjust according to your own environment.
 
-```json
+```javascript
 {
     "rest-client.environmentVariables": {
         "$shared": {
@@ -25,4 +25,4 @@ This assumes you're working with Visual Studio Code. Create a folder in the root
 
 ## Deployment
 
-Deploying the Azure resources can be done by running the script [1-1-deployment.ps1](./Assets/Code/IaC/1-1-deployment.ps1).
+Deploying the Azure resources can be done by running the script [1-deployment.ps1](./Assets/Code/IaC/1-deployment.ps1).
