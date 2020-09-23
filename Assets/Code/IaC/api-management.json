@@ -40,7 +40,7 @@
         },
         "keyVault": {
             "defaultValue": {
-                "name": "kv-api-platform"
+                "name": "kv-api-platform-4"
             },
             "type": "object"
         }
