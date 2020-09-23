@@ -2,13 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "gitHub": {
-            "defaultValue": {
-                "baseUri": "https://raw.githubusercontent.com/EldertGrootenboer/Building-better-security-for-your-API-platform-using-Azure-API-Management/master/Assets/Code/IaC/"
-            },
-            "type": "object"
-        },
         "administratorObjectId": {
+            "type": "string"
+        },
+        "apiAppRegistrationApplicationId": {
             "type": "string"
         },
         "basicAuthenticationPassword": {
@@ -22,6 +19,12 @@
                     "Project": "Building better security for your API platform using Azure API Management",
                     "Purpose": "Session"
                 }
+            },
+            "type": "object"
+        },
+        "gitHub": {
+            "defaultValue": {
+                "baseUri": "https://raw.githubusercontent.com/EldertGrootenboer/Building-better-security-for-your-API-platform-using-Azure-API-Management/master/Assets/Code/IaC/"
             },
             "type": "object"
         },
@@ -61,6 +64,9 @@
                 "parameters": {
                     "administratorObjectId": {
                         "value": "[parameters('administratorObjectId')]"
+                    },
+                    "apiAppRegistrationApplicationId": {
+                        "value": "[parameters('apiAppRegistrationApplicationId')]"
                     },
                     "basicAuthenticationPassword": {
                         "value": "[parameters('basicAuthenticationPassword')]"

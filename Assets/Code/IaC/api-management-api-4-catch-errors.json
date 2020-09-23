@@ -42,6 +42,15 @@
                 "name": "app-api-platform-security-2"
             },
             "type": "object"
+        },
+        "keyVault": {
+            "defaultValue": {
+                "name": "kv-api-platform",
+                "secrets": {
+                    "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId"
+                }
+            },
+            "type": "object"
         }
     },
     "resources": [
@@ -253,7 +262,7 @@
                 "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.catchErrors.name)]"
             ],
             "properties": {
-                "value": "[concat('<policies><inbound><!-- Check if the correct OAuth2 claims are sent --><validate-jwt header-name=\"Authorization\" failed-validation-httpcode=\"401\" failed-validation-error-message=\"Unauthorized. Access token is missing or invalid.\"><openid-config url=\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\" /><required-claims><claim name=\"aud\"><value>api://', parameters('apiManagement').name, '</value></claim><claim name=\"iss\"><value>https://sts.windows.net/', subscription().tenantId, '/v2.0</value></claim></required-claims></validate-jwt><base /><!-- Set the backend url for the API --><set-backend-service id=\"apim-generated-policy\" backend-id=\"', parameters('appService').name, '\" /><rewrite-uri template=\"@{return (\"/api\" + context.Operation.UrlTemplate);}\" copy-unmatched-params=\"true\" /></inbound><backend><base /></backend><outbound><choose><when condition=\"@(context.Response.StatusCode >= 500)\"><choose><when condition=\"@(context.Response.Body.As<string>().Contains(\"Attempted to update or delete an entity that does not exist\"))\"><return-response><set-body>No repair with that ID could be found.</set-body></return-response></when><otherwise><return-response><set-body>An error occured, please try again later.</set-body></return-response></otherwise></choose></when></choose><base /></outbound><on-error><base /></on-error></policies>')]",
+                "value": "[concat('<policies><inbound><!-- Retrieve audience from Key Vault --><send-request ignore-error=\"false\" timeout=\"20\" response-variable-name=\"audienceResponse\" mode=\"new\"><set-url>https://', parameters('keyVault').name, '.vault.azure.net/secrets/', parameters('keyVault').secrets.apiAppRegistrationApplicationId, '/?api-version=7.0</set-url><set-method>GET</set-method><authentication-managed-identity resource=\"https://vault.azure.net\" /></send-request><set-variable name=\"audience\" value=\"@{ var secret = ((IResponse)context.Variables[\"audienceResponse\"]).Body.As<JObject>(); return secret[\"value\"].ToString(); }\" /><!-- Check if the correct OAuth2 claims are sent --><validate-jwt header-name=\"Authorization\" failed-validation-httpcode=\"401\" failed-validation-error-message=\"Unauthorized. Access token is missing or invalid.\"><openid-config url=\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\" /><required-claims><claim name=\"aud\"><value>@{ return $\"{(string)context.Variables[\"audience\"]}\";}</value></claim><claim name=\"iss\"><value>https://login.microsoftonline.com/', subscription().tenantId, '/v2.0</value></claim></required-claims></validate-jwt><base /><!-- Set the backend url for the API --><set-backend-service id=\"apim-generated-policy\" backend-id=\"', parameters('appService').name, '\" /><rewrite-uri template=\"@{return (\"/api\" + context.Operation.UrlTemplate);}\" copy-unmatched-params=\"true\" /></inbound><backend><base /></backend><outbound><choose><when condition=\"@(context.Response.StatusCode >= 500)\"><choose><when condition=\"@(context.Response.Body.As<string>().Contains(\"Attempted to update or delete an entity that does not exist\"))\"><return-response><set-body>No repair with that ID could be found.</set-body></return-response></when><otherwise><return-response><set-body>An error occured, please try again later.</set-body></return-response></otherwise></choose></when></choose><base /></outbound><on-error><base /></on-error></policies>')]",
                 "format": "rawxml"
             }
         }
