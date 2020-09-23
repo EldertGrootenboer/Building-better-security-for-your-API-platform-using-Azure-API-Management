@@ -24,7 +24,7 @@
         },
         "keyVault": {
             "defaultValue": {
-                "name": "kv-api-platform-4",
+                "name": "kv-api-platform",
                 "secrets": {
                     "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId",
                     "basicAuthenticationPassword": "BasicAuthenticationPassword"

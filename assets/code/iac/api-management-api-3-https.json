@@ -38,19 +38,19 @@
                         "path": "demo3"
                     }
                 },
-                "name": "apim-api-platform-security-4"
+                "name": "apim-api-platform-security"
             },
             "type": "object"
         },
         "appService": {
             "defaultValue": {
-                "name": "app-api-platform-security-4"
+                "name": "app-api-platform-security"
             },
             "type": "object"
         },
         "keyVault": {
             "defaultValue": {
-                "name": "kv-api-platform-4",
+                "name": "kv-api-platform",
                 "secrets": {
                     "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId"
                 }

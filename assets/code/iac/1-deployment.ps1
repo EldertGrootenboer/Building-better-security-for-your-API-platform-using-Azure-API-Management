@@ -9,8 +9,8 @@
 # Update these according to the environment
 $subscriptionName = "Visual Studio Enterprise"
 $apiAppRegistrationName = "api-app-registration-api-platform-security"
-$resourceGroupName = "rg-api-platform-security-4"
-$appServiceName = "app-api-platform-security-4"
+$resourceGroupName = "rg-api-platform-security"
+$appServiceName = "app-api-platform-security"
 $basePath = "C:\Users\elder\OneDrive\Sessions\Building-better-security-for-your-API-platform-using-Azure-API-Management"
 $settingsPath = "$basePath\.vscode\settings.json"
 $administratorEmail = "me@eldert.net"
