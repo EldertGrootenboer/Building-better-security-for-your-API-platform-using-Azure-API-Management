@@ -5,7 +5,7 @@
         "appService": {
             "defaultValue": {
                 "appServicePlan": "plan-api-platform-security",
-                "name": "app-api-platform-security-2"
+                "name": "app-api-platform-security-4"
             },
             "type": "object"
         },

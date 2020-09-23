@@ -1,4 +1,4 @@
-@host = http://app-api-platform-security-2.azurewebsites.net
+@host = http://app-api-platform-security-4.azurewebsites.net
 #@host = https://localhost:5001
 
 ### Retrieve all repairs
