@@ -1,9 +1,10 @@
 @host = apim-api-platform-security-4.azure-api.net
 
-### Standard response
+### Full response with sensitive data
 GET https://{{host}}/demo/repairs
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
+# 5 - Remove Sensitive Data
 ### OAuth2 authentication
 # @name auth
 POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token HTTP/1.1

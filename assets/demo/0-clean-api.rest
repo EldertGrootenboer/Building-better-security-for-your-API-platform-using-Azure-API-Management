@@ -7,6 +7,7 @@ GET {{host}}/api/Repairs
 ### Retrieve specific repair
 GET {{host}}/api/Repairs/1
 
+# 0 - Clean API
 ### Create repair
 POST {{host}}/api/Repairs
 Content-Type: application/json

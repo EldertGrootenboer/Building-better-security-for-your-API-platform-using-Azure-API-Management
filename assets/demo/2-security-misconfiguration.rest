@@ -1,7 +1,8 @@
 @host = apim-api-platform-security-4.azure-api.net
 
-### Missing authentication
-GET http://{{host}}/demo/repairs
+# 3 - HTTPS
+### Using HTTP instead of HTTPS
+GET http://{{host}}/demo3/repairs
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### OAuth2 authentication
@@ -19,13 +20,9 @@ GET http://{{host}}/demo3/repairs
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
+# 4 - Catch Errors
 ### Get repairs using OAuth2 over HTTPS
 GET https://{{host}}/demo3/repairs
-Authorization: Bearer {{auth.response.body.access_token}}
-Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
-
-### Get specific repair
-GET https://{{host}}/demo3/repairs/1
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
@@ -34,7 +31,12 @@ DELETE https://{{host}}/demo3/repairs/1
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
-### Update repair
+### Get specific repair with backend information
+GET https://{{host}}/demo3/repairs/1
+Authorization: Bearer {{auth.response.body.access_token}}
+Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
+
+### Update non-existing repair with full errors
 PUT https://{{host}}/demo3/repairs/502
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
@@ -45,7 +47,7 @@ Content-Type: application/json
     "Status": "Finished"
 }
 
-### Update repair
+### Update repair with pretty error
 PUT https://{{host}}/demo4/repairs/502
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}

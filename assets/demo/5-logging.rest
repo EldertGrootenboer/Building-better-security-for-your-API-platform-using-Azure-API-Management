@@ -4,6 +4,7 @@
 GET https://{{host}}/demo/repairs
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
+# 7 - Logging
 ### OAuth2 authentication
 # @name auth
 POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token HTTP/1.1

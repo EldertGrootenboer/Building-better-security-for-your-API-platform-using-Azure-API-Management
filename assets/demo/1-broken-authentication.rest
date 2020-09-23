@@ -1,5 +1,6 @@
 @host = apim-api-platform-security-4.azure-api.net
 
+# 1 - Basic Authentication
 ### Missing authentication
 GET http://{{host}}/demo1/repairs
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
@@ -9,6 +10,7 @@ GET http://{{host}}/demo1/Repairs
 Authorization: Basic {{basicAuthenticationPassword}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
+# 2 - OAuth
 ### OAuth2 authentication
 # @name auth
 POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token HTTP/1.1

@@ -1,9 +1,10 @@
 @host = apim-api-platform-security-4.azure-api.net
 
-### Standard response
+### Non-throttled
 GET https://{{host}}/demo/repairs
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
+# 6 - Throttling
 ### OAuth2 authentication
 # @name auth
 POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token HTTP/1.1
@@ -14,7 +15,7 @@ grant_type=client_credentials
 &client_secret={{clientSecret}}
 &scope={{scope}}
 
-### Get repairs using OAuth2
+### Get repairs using OAuth2 with throttling
 GET https://{{host}}/demo6/repairs
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
