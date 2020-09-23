@@ -25,7 +25,7 @@ $apiAppRegistration = Get-AzADApplication -DisplayName $apiAppRegistrationName
 
 # Create the resource group and deploy the resources
 New-AzResourceGroup -Name $resourceGroupName -Location 'West Europe' -Tag @{CreationDate=[DateTime]::UtcNow.ToString(); Project="Building better security for your API platform using Azure API Management"; Purpose="Session"}
-New-AzResourceGroupDeployment -Name Demo -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\Assets\Code\IaC\azuredeploy.json" -administratorObjectId $administratorObjectId -basicAuthenticationPassword $basicAuthenticationPassword -apiAppRegistrationApplicationId $apiAppRegistration.ApplicationId
+New-AzResourceGroupDeployment -Name "APISecurity" -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\Assets\Code\IaC\azuredeploy.json" -administratorObjectId $administratorObjectId -basicAuthenticationPassword $basicAuthenticationPassword -apiAppRegistrationApplicationId $apiAppRegistration.ApplicationId
 
 # Deploy contents of the App Service
 dotnet publish -c Release -o "$basePath\Assets\Code\Web API\AssetManagementApi\publish"
