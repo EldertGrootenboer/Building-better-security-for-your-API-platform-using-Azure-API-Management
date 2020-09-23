@@ -26,14 +26,11 @@
             "defaultValue": {
                 "name": "kv-api-platform",
                 "secrets": {
+                    "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId",
                     "basicAuthenticationPassword": "BasicAuthenticationPassword"
                 }
             },
             "type": "object"
-        },
-        "apiAppRegistrationApplicationIdKey": {
-            "defaultValue": "apiAppRegistrationApplicationId",
-            "type": "string"
         }
     },
     "resources": [
@@ -98,8 +95,6 @@
                                 "Import",
                                 "Delete",
                                 "Recover",
-                                "Backup",
-                                "Restore",
                                 "ManageContacts",
                                 "ManageIssuers",
                                 "GetIssuers",
@@ -129,7 +124,7 @@
         {
             "type": "Microsoft.KeyVault/vaults/secrets",
             "apiVersion": "2016-10-01",
-            "name": "[concat(parameters('keyVault').name, '/', parameters('apiAppRegistrationApplicationIdKey'))]",
+            "name": "[concat(parameters('keyVault').name, '/', parameters('keyVault').secrets.apiAppRegistrationApplicationId)]",
             "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('keyVault').name)]"
             ],

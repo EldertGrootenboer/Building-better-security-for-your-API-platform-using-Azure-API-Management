@@ -11,29 +11,9 @@
         "basicAuthenticationPassword": {
             "type": "string"
         },
-        "general": {
-            "defaultValue": {
-                "location": "[resourceGroup().location]",
-                "tags": {
-                    "LastModifiedDate": "[utcNow()]",
-                    "Project": "Building better security for your API platform using Azure API Management",
-                    "Purpose": "Session"
-                }
-            },
-            "type": "object"
-        },
         "gitHub": {
             "defaultValue": {
                 "baseUri": "https://raw.githubusercontent.com/EldertGrootenboer/Building-better-security-for-your-API-platform-using-Azure-API-Management/master/Assets/Code/IaC/"
-            },
-            "type": "object"
-        },
-        "keyVault": {
-            "defaultValue": {
-                "name": "kv-api-platform",
-                "secrets": {
-                    "basicAuthenticationPassword": "BasicAuthenticationPassword"
-                }
             },
             "type": "object"
         }
@@ -70,12 +50,6 @@
                     },
                     "basicAuthenticationPassword": {
                         "value": "[parameters('basicAuthenticationPassword')]"
-                    },
-                    "general": {
-                        "value": "[parameters('general')]"
-                    },
-                    "keyVault": {
-                        "value": "[parameters('keyVault')]"
                     }
                 }
             }
