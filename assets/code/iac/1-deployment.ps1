@@ -18,9 +18,9 @@ $administratorEmail = "me@eldert.net"
 Get-AzSubscription -SubscriptionName $subscriptionName | Set-AzContext
 
 # Retrieves the dynamic parameters
-$administratorObjectId = (Get-AzADUser -Mail $administratorEmail).Id | ConvertTo-SecureString -AsPlainText -Force
+$administratorObjectId = (Get-AzADUser -Mail $administratorEmail).Id
 $basicAuthenticationPassword = (Get-Content -Path $settingsPath | ConvertFrom-Json).'rest-client.environmentVariables'.'$shared'.basicAuthenticationPassword | ConvertTo-SecureString -AsPlainText -Force
-$apiAppRegistration = Get-AzADApplication -DisplayName $apiAppRegistrationName
+$apiAppRegistration = Get-AzADApplication -DisplayName $apiAppRegistrationName | ConvertTo-SecureString -AsPlainText -Force
 
 # Create the resource group and deploy the resources
 New-AzResourceGroup -Name $resourceGroupName -Location 'West Europe' -Tag @{CreationDate=[DateTime]::UtcNow.ToString(); Project="Building better security for your API platform using Azure API Management"; Purpose="Session"}
