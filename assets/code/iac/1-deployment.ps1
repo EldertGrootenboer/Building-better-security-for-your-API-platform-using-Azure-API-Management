@@ -28,7 +28,7 @@ New-AzResourceGroup -Name $resourceGroupName -Location 'West Europe' -Tag @{Crea
 New-AzResourceGroupDeployment -Name "APISecurity" -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\assets\code\iac\azuredeploy.json" -administratorObjectId $administratorObjectId -basicAuthenticationPassword $basicAuthenticationPassword -apiAppRegistrationApplicationId $apiAppRegistration.ApplicationId
 
 # Deploy contents of the App Service
-dotnet publish -c Release -o "$basePath\assets\code\web-api\asset-management-api\publish"
+dotnet publish "$basePath\assets\code\web-api\asset-management-api\AssetManagementApi.csproj" -c Release -o "$basePath\assets\code\web-api\asset-management-api\publish"
 Compress-Archive -Path "$basePath\assets\code\web-api\asset-management-api\publish\*" -DestinationPath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
 Publish-AzWebapp -ResourceGroupName $resourceGroupName -Name $appServiceName -ArchivePath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
 Remove-Item "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
