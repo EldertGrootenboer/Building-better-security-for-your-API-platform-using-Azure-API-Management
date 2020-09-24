@@ -5,7 +5,7 @@
         "appService": {
             "defaultValue": {
                 "appServicePlan": "plan-api-platform-security",
-                "name": "[concat('app-api-platform-security', uniqueString(resourceGroup().name))]"
+                "name": "[concat('app-api-platform-security-', uniqueString(resourceGroup().name))]"
             },
             "type": "object"
         },

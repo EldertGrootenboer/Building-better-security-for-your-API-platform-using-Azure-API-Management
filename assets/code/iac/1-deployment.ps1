@@ -20,16 +20,17 @@ Get-AzSubscription -SubscriptionName $subscriptionName | Set-AzContext
 # Retrieves the dynamic parameters
 $administratorObjectId = (Get-AzADUser -Mail $administratorEmail).Id
 $basicAuthenticationPassword = (Get-Content -Path $settingsPath | ConvertFrom-Json).'rest-client.environmentVariables'.'$shared'.basicAuthenticationPassword | ConvertTo-SecureString -AsPlainText -Force
-$apiAppRegistration = Get-AzADApplication -DisplayName $apiAppRegistrationName | ConvertTo-SecureString -AsPlainText -Force
+$apiAppRegistration = (Get-AzADApplication -DisplayName $apiAppRegistrationName).ApplicationId | ConvertTo-SecureString -AsPlainText -Force
 
 # Create the resource group and deploy the resources
 New-AzResourceGroup -Name $resourceGroupName -Location 'West Europe' -Tag @{CreationDate=[DateTime]::UtcNow.ToString(); Project="Building better security for your API platform using Azure API Management"; Purpose="Session"}
-New-AzResourceGroupDeployment -Name "APISecurity" -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\assets\code\iac\azuredeploy.json" -administratorObjectId $administratorObjectId -basicAuthenticationPassword $basicAuthenticationPassword -apiAppRegistrationApplicationId $apiAppRegistration.ApplicationId
+New-AzResourceGroupDeployment -Name "APISecurity" -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\assets\code\iac\azuredeploy.json" -administratorObjectId $administratorObjectId -basicAuthenticationPassword $basicAuthenticationPassword -apiAppRegistrationApplicationId $apiAppRegistration
 
 # Deploy contents of the App Service
 dotnet publish "$basePath\assets\code\web-api\asset-management-api\AssetManagementApi.csproj" -c Release -o "$basePath\assets\code\web-api\asset-management-api\publish"
 Compress-Archive -Path "$basePath\assets\code\web-api\asset-management-api\publish\*" -DestinationPath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
-Publish-AzWebapp -ResourceGroupName $resourceGroupName -ArchivePath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
+$appService = Get-AzResource -ResourceGroupName $resourceGroupName -Name app-*
+Publish-AzWebapp -ResourceGroupName $resourceGroupName -Name $appService.Name -ArchivePath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
 Remove-Item "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
 
 # Optional for debugging, loops through each local file individually
