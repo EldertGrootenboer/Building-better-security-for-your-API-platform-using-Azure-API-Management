@@ -6,10 +6,10 @@
             "type": "string"
         },
         "apiAppRegistrationApplicationId": {
-            "type": "string"
+            "type": "securestring"
         },
         "basicAuthenticationPassword": {
-            "type": "string"
+            "type": "securestring"
         },
         "general": {
             "defaultValue": {

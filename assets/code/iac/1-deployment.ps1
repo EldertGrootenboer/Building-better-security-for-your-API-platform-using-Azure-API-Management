@@ -18,8 +18,8 @@ $administratorEmail = "me@eldert.net"
 Get-AzSubscription -SubscriptionName $subscriptionName | Set-AzContext
 
 # Retrieves the dynamic parameters
-$administratorObjectId = (Get-AzADUser -Mail $administratorEmail).Id
-$basicAuthenticationPassword = (Get-Content -Path $settingsPath | ConvertFrom-Json).'rest-client.environmentVariables'.'$shared'.basicAuthenticationPassword
+$administratorObjectId = (Get-AzADUser -Mail $administratorEmail).Id | ConvertTo-SecureString -AsPlainText -Force
+$basicAuthenticationPassword = (Get-Content -Path $settingsPath | ConvertFrom-Json).'rest-client.environmentVariables'.'$shared'.basicAuthenticationPassword | ConvertTo-SecureString -AsPlainText -Force
 $apiAppRegistration = Get-AzADApplication -DisplayName $apiAppRegistrationName
 
 # Create the resource group and deploy the resources
