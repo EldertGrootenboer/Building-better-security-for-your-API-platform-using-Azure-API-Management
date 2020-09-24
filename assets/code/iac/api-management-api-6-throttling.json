@@ -33,13 +33,13 @@
                         "path": "demo6"
                     }
                 },
-                "name": "apim-api-platform-security"
+                "name": "[concat('apim-api-platform-security', uniqueString(resourceGroup().name))]"
             },
             "type": "object"
         },
         "appService": {
             "defaultValue": {
-                "name": "app-api-platform-security"
+                "name": "[concat('app-api-platform-security', uniqueString(resourceGroup().name))]"
             },
             "type": "object"
         },

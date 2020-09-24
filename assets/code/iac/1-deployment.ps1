@@ -10,7 +10,6 @@
 $subscriptionName = "Visual Studio Enterprise"
 $apiAppRegistrationName = "api-app-registration-api-platform-security"
 $resourceGroupName = "rg-api-platform-security"
-$appServiceName = "app-api-platform-security"
 $basePath = "C:\Users\elder\OneDrive\Sessions\Building-better-security-for-your-API-platform-using-Azure-API-Management"
 $settingsPath = "$basePath\.vscode\settings.json"
 $administratorEmail = "me@eldert.net"
@@ -30,7 +29,7 @@ New-AzResourceGroupDeployment -Name "APISecurity" -ResourceGroupName $resourceGr
 # Deploy contents of the App Service
 dotnet publish "$basePath\assets\code\web-api\asset-management-api\AssetManagementApi.csproj" -c Release -o "$basePath\assets\code\web-api\asset-management-api\publish"
 Compress-Archive -Path "$basePath\assets\code\web-api\asset-management-api\publish\*" -DestinationPath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
-Publish-AzWebapp -ResourceGroupName $resourceGroupName -Name $appServiceName -ArchivePath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
+Publish-AzWebapp -ResourceGroupName $resourceGroupName -ArchivePath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
 Remove-Item "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
 
 # Optional for debugging, loops through each local file individually

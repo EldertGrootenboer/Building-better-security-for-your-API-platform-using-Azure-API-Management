@@ -4,7 +4,7 @@
     "parameters": {
         "apiManagement": {
             "defaultValue": {
-                "name": "apim-api-platform-security",
+                "name": "[concat('apim-api-platform-security', uniqueString(resourceGroup().name))]",
                 "publisherEmail": "eldert@eldert.net",
                 "publisherName": "EPH",
                 "sku": "Developer",
@@ -17,7 +17,7 @@
         },
         "appService": {
             "defaultValue": {
-                "name": "app-api-platform-security"
+                "name": "[concat('app-api-platform-security', uniqueString(resourceGroup().name))]"
             },
             "type": "object"
         },
