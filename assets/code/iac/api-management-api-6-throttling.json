@@ -45,7 +45,7 @@
         },
         "keyVault": {
             "defaultValue": {
-                "name": "kv-api-platform",
+                "name": "[concat('kv-', uniqueString(resourceGroup().name))]",
                 "secrets": {
                     "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId"
                 }

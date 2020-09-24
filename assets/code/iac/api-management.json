@@ -40,7 +40,7 @@
         },
         "keyVault": {
             "defaultValue": {
-                "name": "kv-api-platform"
+                "name": "[concat('kv-', uniqueString(resourceGroup().name))]"
             },
             "type": "object"
         }
