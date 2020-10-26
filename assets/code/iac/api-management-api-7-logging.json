@@ -15,7 +15,7 @@
                                 "urlTemplate": "/repairs"
                             },
                             "getRepairByID": {
-                                "displayName": "Create Repair",
+                                "displayName": "Get Repair",
                                 "name": "GetRepairByID",
                                 "urlTemplate": "/repairs/{id}"
                             },
