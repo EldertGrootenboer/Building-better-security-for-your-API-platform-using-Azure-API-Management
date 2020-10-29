@@ -16,7 +16,7 @@ grant_type=client_credentials
 &scope={{scope}}
 
 ### Create repair
-GET https://{{host}}/demo7/repairs
+POST https://{{host}}/demo7/repairs
 Content-Type: application/json
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
