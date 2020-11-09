@@ -1,10 +1,6 @@
 @host = apim-api-platform-security.azure-api.net
 
 # 3 - HTTPS
-### Using HTTP instead of HTTPS
-GET http://{{host}}/demo3/repairs
-Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
-
 ### OAuth2 authentication
 # @name auth
 POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token HTTP/1.1
@@ -27,12 +23,12 @@ Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### Delete repair
-DELETE https://{{host}}/demo3/repairs/1
+DELETE https://{{host}}/demo3/repairs/4
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### Get specific repair with backend information
-GET https://{{host}}/demo3/repairs/1
+GET https://{{host}}/demo3/repairs/4
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
