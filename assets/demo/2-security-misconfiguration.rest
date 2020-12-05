@@ -16,12 +16,12 @@ GET http://{{host}}/demo3/repairs
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
-# 4 - Catch Errors
 ### Get repairs using OAuth2 over HTTPS
 GET https://{{host}}/demo3/repairs
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
+# 4 - Catch Errors
 ### Delete repair
 DELETE https://{{host}}/demo3/repairs/4
 Authorization: Bearer {{auth.response.body.access_token}}
