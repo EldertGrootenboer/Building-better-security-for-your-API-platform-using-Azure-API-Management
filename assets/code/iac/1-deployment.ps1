@@ -23,14 +23,14 @@ $basicAuthenticationPassword = (Get-Content -Path $settingsPath | ConvertFrom-Js
 $apiAppRegistration = (Get-AzADApplication -DisplayName $apiAppRegistrationName).ApplicationId | ConvertTo-SecureString -AsPlainText -Force
 
 # Create the resource group and deploy the resources
-New-AzResourceGroup -Name $resourceGroupName -Location 'West Europe' -Tag @{CreationDate=[DateTime]::UtcNow.ToString(); Project="Building better security for your API platform using Azure API Management"; Purpose="Session"}
+New-AzResourceGroup -Name $resourceGroupName -Location 'West Europe' -Tag @{CreationDate=[DateTime]::UtcNow.ToString(); Project="Building better security for your API platform using Azure API Management"; Purpose="Session"} -Force
 New-AzResourceGroupDeployment -Name "APISecurity" -ResourceGroupName $resourceGroupName -TemplateFile "$basePath\assets\code\iac\azuredeploy.json" -administratorObjectId $administratorObjectId -basicAuthenticationPassword $basicAuthenticationPassword -apiAppRegistrationApplicationId $apiAppRegistration
 
 # Deploy contents of the App Service
 dotnet publish "$basePath\assets\code\web-api\asset-management-api\AssetManagementApi.csproj" -c Release -o "$basePath\assets\code\web-api\asset-management-api\publish"
-Compress-Archive -Path "$basePath\assets\code\web-api\asset-management-api\publish\*" -DestinationPath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
+Compress-Archive -Path "$basePath\assets\code\web-api\asset-management-api\publish\*" -DestinationPath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip" -Force
 $appService = Get-AzResource -ResourceGroupName $resourceGroupName -Name app-*
-Publish-AzWebapp -ResourceGroupName $resourceGroupName -Name $appService.Name -ArchivePath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
+Publish-AzWebapp -ResourceGroupName $resourceGroupName -Name $appService.Name -ArchivePath "$basePath\assets\code\web-api\asset-management-api\Deployment.zip" -Force
 Remove-Item "$basePath\assets\code\web-api\asset-management-api\Deployment.zip"
 
 # Optional for debugging, loops through each local file individually

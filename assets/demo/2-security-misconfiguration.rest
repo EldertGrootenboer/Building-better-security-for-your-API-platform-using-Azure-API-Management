@@ -28,7 +28,7 @@ Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
 ### Get specific repair with backend information
-GET https://{{host}}/demo3/repairs/4
+GET https://{{host}}/demo3/repairs/3
 Authorization: Bearer {{auth.response.body.access_token}}
 Ocp-Apim-Subscription-Key: {{apiManagementSubscriptionKey}}
 
