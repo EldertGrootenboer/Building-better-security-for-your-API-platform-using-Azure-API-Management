@@ -1,4 +1,5 @@
-@host = apim-api-platform-security.azure-api.net
+@host = apim-api-platform-security-ox7dl67n2oae2.azure-api.net
+
 
 # 3 - HTTPS
 ### OAuth2 authentication

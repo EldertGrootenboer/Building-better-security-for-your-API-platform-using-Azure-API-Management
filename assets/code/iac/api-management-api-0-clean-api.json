@@ -38,7 +38,11 @@
                         "path": "demo"
                     }
                 },
-                "name": "[concat('apim-api-platform-security-', uniqueString(resourceGroup().name))]"
+                "name": "[concat('apim-api-platform-security-', uniqueString(resourceGroup().name))]",
+                "namedValues": {
+                    "basicAuthenticationPassword": "BasicAuthenticationPassword",
+                    "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId"
+                }
             },
             "type": "object"
         },

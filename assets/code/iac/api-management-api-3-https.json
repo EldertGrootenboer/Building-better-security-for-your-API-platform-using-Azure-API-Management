@@ -38,22 +38,17 @@
                         "path": "demo3"
                     }
                 },
-                "name": "[concat('apim-api-platform-security-', uniqueString(resourceGroup().name))]"
+                "name": "[concat('apim-api-platform-security-', uniqueString(resourceGroup().name))]",
+                "namedValues": {
+                    "basicAuthenticationPassword": "BasicAuthenticationPassword",
+                    "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId"
+                }
             },
             "type": "object"
         },
         "appService": {
             "defaultValue": {
                 "name": "[concat('app-api-platform-security-', uniqueString(resourceGroup().name))]"
-            },
-            "type": "object"
-        },
-        "keyVault": {
-            "defaultValue": {
-                "name": "[concat('kv-', uniqueString(resourceGroup().name))]",
-                "secrets": {
-                    "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId"
-                }
             },
             "type": "object"
         }
@@ -315,7 +310,7 @@
                 "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apiManagement').name, parameters('apiManagement').apis.https.name)]"
             ],
             "properties": {
-                "value": "[concat('<policies><inbound><!-- Retrieve audience from Key Vault --><send-request ignore-error=\"false\" timeout=\"20\" response-variable-name=\"audienceResponse\" mode=\"new\"><set-url>https://', parameters('keyVault').name, '.vault.azure.net/secrets/', parameters('keyVault').secrets.apiAppRegistrationApplicationId, '/?api-version=7.0</set-url><set-method>GET</set-method><authentication-managed-identity resource=\"https://vault.azure.net\" /></send-request><set-variable name=\"audience\" value=\"@{ var secret = ((IResponse)context.Variables[\"audienceResponse\"]).Body.As<JObject>(); return secret[\"value\"].ToString(); }\" /><!-- Check if the correct OAuth2 claims are sent --><validate-jwt header-name=\"Authorization\" failed-validation-httpcode=\"401\" failed-validation-error-message=\"Unauthorized. Access token is missing or invalid.\"><openid-config url=\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\" /><required-claims><claim name=\"aud\"><value>@{ return $\"{(string)context.Variables[\"audience\"]}\";}</value></claim><claim name=\"iss\"><value>https://login.microsoftonline.com/', subscription().tenantId, '/v2.0</value></claim></required-claims></validate-jwt><base /><!-- Set the backend url for the API --><set-backend-service id=\"apim-generated-policy\" backend-id=\"', parameters('appService').name, '\" /><rewrite-uri template=\"@{return (\"/api\" + context.Operation.UrlTemplate);}\" copy-unmatched-params=\"true\" /></inbound><backend><base /></backend><outbound><base /></outbound><on-error><base /></on-error></policies>')]",
+                "value": "[concat('<policies><inbound><!-- Check if the correct OAuth2 claims are sent --><validate-jwt header-name=\"Authorization\" failed-validation-httpcode=\"401\" failed-validation-error-message=\"Unauthorized. Access token is missing or invalid.\"><openid-config url=\"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration\" /><required-claims><claim name=\"aud\"><value>{{', parameters('apiManagement').namedValues.apiAppRegistrationApplicationId, '}}</value></claim><claim name=\"iss\"><value>https://login.microsoftonline.com/', subscription().tenantId, '/v2.0</value></claim></required-claims></validate-jwt><base /><!-- Set the backend url for the API --><set-backend-service id=\"apim-generated-policy\" backend-id=\"', parameters('appService').name, '\" /><rewrite-uri template=\"@{return (\"/api\" + context.Operation.UrlTemplate);}\" copy-unmatched-params=\"true\" /></inbound><backend><base /></backend><outbound><base /></outbound><on-error><base /></on-error></policies>')]",
                 "format": "rawxml"
             }
         }

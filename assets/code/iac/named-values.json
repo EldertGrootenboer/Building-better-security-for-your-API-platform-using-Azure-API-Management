@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apiManagement": {
+            "defaultValue": {
+                "name": "[concat('apim-api-platform-security-', uniqueString(resourceGroup().name))]",
+                "namedValues": {
+                    "basicAuthenticationPassword": "BasicAuthenticationPassword",
+                    "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId"
+                }
+            },
+            "type": "object"
+        },
+        "keyVault": {
+            "defaultValue": {
+                "name": "[concat('kv-', uniqueString(resourceGroup().name))]",
+                "secrets": {
+                    "basicAuthenticationPassword": "BasicAuthenticationPassword",
+                    "apiAppRegistrationApplicationId": "ApiAppRegistrationApplicationId"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/namedValues",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').namedValues.apiAppRegistrationApplicationId)]",
+            "properties": {
+                "displayName": "[parameters('apiManagement').namedValues.apiAppRegistrationApplicationId]",
+                "keyVault": {
+                    "secretIdentifier": "[concat('https://', parameters('keyVault').name, '.vault.azure.net/secrets/', parameters('keyVault').secrets.apiAppRegistrationApplicationId)]"
+                },
+                "secret": true
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/namedValues",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(parameters('apiManagement').name, '/', parameters('apiManagement').namedValues.basicAuthenticationPassword)]",
+            "properties": {
+                "displayName": "[parameters('apiManagement').namedValues.basicAuthenticationPassword]",
+                "keyVault": {
+                    "secretIdentifier": "[concat('https://', parameters('keyVault').name, '.vault.azure.net/secrets/', parameters('keyVault').secrets.basicAuthenticationPassword)]"
+                },
+                "secret": true
+            }
+        }
+    ]
+}

@@ -1,4 +1,4 @@
-@host = http://app-api-platform-security.azurewebsites.net
+@host = http://app-api-platform-security-ox7dl67n2oae2.azurewebsites.net
 #@host = https://localhost:5001
 
 ### Retrieve all repairs
@@ -22,16 +22,16 @@ Content-Type: application/json
 }
 
 ### Retrieve specific repair
-GET {{host}}/api/Repairs/4
+GET {{host}}/api/Repairs/5
 
 ### Update repair
-PUT {{host}}/api/Repairs/4
+PUT {{host}}/api/Repairs/5
 Content-Type: application/json
 
 {
-    "id": 4,
+    "id": 5,
     "Status": "Finished"
 }
 
 ### Delete repair
-DELETE {{host}}/api/Repairs/4
+DELETE {{host}}/api/Repairs/5
