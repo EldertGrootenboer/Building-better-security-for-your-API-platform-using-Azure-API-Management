@@ -22,16 +22,16 @@ Content-Type: application/json
 }
 
 ### Retrieve specific repair
-GET {{host}}/api/Repairs/4
+GET {{host}}/api/Repairs/7
 
 ### Update repair
-PUT {{host}}/api/Repairs/4
+PUT {{host}}/api/Repairs/7
 Content-Type: application/json
 
 {
-    "id": 4,
+    "id": 7,
     "Status": "Finished"
 }
 
 ### Delete repair
-DELETE {{host}}/api/Repairs/4
+DELETE {{host}}/api/Repairs/7

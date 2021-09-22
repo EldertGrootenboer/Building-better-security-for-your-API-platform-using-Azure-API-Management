@@ -352,3 +352,4 @@ MigrationBackup/
 assets/.vscode/settings.json
 .vscode/settings.json
 /assets/code/asset-management/AssetManagement/App.config
+local.settings.json
